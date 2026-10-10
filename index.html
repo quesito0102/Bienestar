@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6e8ec">
+<meta name="description" content="Registro personal de alimentación, actividad física y bienestar."><meta name="apple-mobile-web-app-capable" content="yes">
+
+<title>Mi bienestar</title>
+<style>
+:root{--bg:#fffaf9;--ink:#3f3540;--muted:#796f7a;--card:#fff;--line:#eee2e8;--pink:#f6e8ec;--green:#e5f0e6;--lav:#e8eaf8;--yellow:#f8eedb;--accent:#926278;--shadow:0 6px 22px #57424c0d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:13px;padding:11px 14px;background:var(--accent);color:white;font-weight:650}button.secondary{background:#f1e9ed;color:#624b59}button.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}button.danger{background:#9c4545}button:disabled{opacity:.5;cursor:not-allowed}input,select,textarea{width:100%;padding:11px 12px;border:1px solid #e6dce2;border-radius:12px;background:#fff;color:var(--ink);min-width:0}label{font-size:.88rem;color:#625762;display:block;margin-bottom:5px}h1,h2,h3,p{margin-top:0}h1{font-size:1.55rem;margin-bottom:4px}h2{font-size:1.15rem;margin-bottom:10px}h3{font-size:1rem;margin-bottom:6px}.muted{color:var(--muted);font-size:.9rem}.tiny{font-size:.78rem;color:var(--muted)}.app{max-width:850px;margin:0 auto;padding:18px 14px 100px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.logo{display:flex;align-items:center;gap:10px}.logoicon{width:44px;height:44px;border-radius:15px;background:var(--pink);display:grid;place-items:center;font-size:24px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--shadow);margin-bottom:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tile{padding:15px;border-radius:17px;min-height:105px;text-align:left;color:var(--ink);border:1px solid transparent;display:flex;flex-direction:column;gap:7px}.tile strong{font-size:1rem}.tile span{font-size:.82rem;color:#665b67;font-weight:400}.pink{background:var(--pink)}.green{background:var(--green)}.lav{background:var(--lav)}.yellow{background:var(--yellow)}.nav{position:fixed;bottom:0;left:0;right:0;background:#fffefdf2;border-top:1px solid var(--line);display:flex;justify-content:center;gap:4px;padding:8px 5px calc(8px + env(safe-area-inset-bottom));z-index:5;backdrop-filter:blur(10px)}.nav button{background:transparent;color:#796f7a;padding:8px 10px;flex:1;max-width:150px;font-size:.78rem}.nav button.active{background:var(--pink);color:#684657}.nav .ico{display:block;font-size:1.15rem}.row{display:flex;gap:10px;align-items:center}.between{display:flex;align-items:center;justify-content:space-between;gap:8px}.stack{display:grid;gap:11px}.fieldgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.fieldgrid .full{grid-column:1/-1}.pill{display:inline-block;padding:4px 9px;border-radius:99px;background:#f4edf1;color:#6f5060;font-size:.77rem}.stat{padding:13px;border-radius:15px;background:#faf5f7}.stat b{display:block;font-size:1.25rem}.foodrow{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}.foodrow:last-child{border-bottom:0}.foodrow .grow{flex:1;min-width:0}.foodrow strong{display:block}.foodrow small{color:var(--muted)}.right{text-align:right}.section{display:none}.section.active{display:block}.notice{padding:11px 12px;border-radius:13px;background:#f8f0df;color:#6d5834;font-size:.88rem}.success{background:#e9f3ea;color:#3d6545}.error{background:#f9e8e8;color:#873c3c}.tabs{display:flex;gap:6px;overflow:auto;margin-bottom:12px}.tabs button{white-space:nowrap}.empty{padding:20px 8px;text-align:center;color:var(--muted)}.result{border:1px solid var(--line);border-radius:14px;padding:11px;margin-top:8px}.result button{padding:7px 10px;font-size:.85rem}.chartbar{height:8px;background:#f1e9ed;border-radius:99px;overflow:hidden;margin-top:6px}.chartbar span{display:block;height:100%;background:#b58ca0;border-radius:99px}.hidden{display:none!important}a{color:var(--accent)}@media(min-width:650px){.app{padding:26px 22px 40px}.nav{position:static;border:1px solid var(--line);border-radius:18px;margin:18px auto 0;max-width:700px}.nav button{font-size:.9rem}.nav .ico{display:inline;margin-right:6px}.app{padding-bottom:24px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+ <div class="logo"><div class="logoicon">🌷</div><div><h1>Mi bienestar</h1><div class="muted">Tu espacio de alimentación y movimiento</div></div></div>
+ <button id="installBtn" class="secondary hidden">Instalar</button>
+</header>
+<div id="offlineNotice" class="notice hidden" style="margin-bottom:12px">Estás sin conexión. Tus registros locales siguen disponibles; la búsqueda online de productos puede no funcionar.</div>
+
+<main>
+<section id="home" class="section active">
+ <div class="card">
+  <div class="between"><div><h2 id="greeting">Tu día, a tu ritmo</h2><div id="todayLabel" class="muted"></div></div><span class="pill">Registro diario</span></div>
+  <div class="grid" style="margin-top:14px">
+   <button class="tile pink" data-goto="food"><strong>🍽️ Alimentación</strong><span>Registrar comidas y nutrientes</span></button>
+   <button class="tile green" data-goto="activity"><strong>🚶 Actividad</strong><span>Ejercicio, baile y caminata</span></button>
+   <button class="tile lav" data-goto="suggest"><strong>🥗 ¿Qué comer después?</strong><span>Ideas según tus registros y alimentos disponibles</span></button>
+   <button class="tile yellow" data-goto="history"><strong>📅 Mi historial</strong><span>Consultar días y semanas anteriores</span></button>
+  </div>
+ </div>
+ <div class="card"><h2>Resumen de hoy</h2><div class="grid">
+  <div class="stat"><span class="muted">Comidas registradas</span><b id="homeMeals">0</b></div>
+  <div class="stat"><span class="muted">Proteína registrada</span><b id="homeProtein">—</b></div>
+  <div class="stat"><span class="muted">Actividad</span><b id="homeActivity">0 min</b></div>
+  <div class="stat"><span class="muted">Alimentos añadidos</span><b id="homeFoods">0</b></div>
+ </div><p class="tiny" style="margin:12px 0 0">Los totales reflejan únicamente los registros introducidos. No son una evaluación médica ni una meta que debas alcanzar.</p></div>
+ <div class="card"><div class="between"><h2>Últimos registros</h2><button class="ghost" data-goto="history">Ver historial</button></div><div id="recentEntries" class="empty">Todavía no has registrado nada hoy.</div></div>
+</section>
+
+<section id="food" class="section">
+ <div class="card"><h2>Registrar alimentación</h2><p class="muted">Busca alimentos del catálogo online o usa los alimentos y recetas dominicanas de ejemplo incluidos en la aplicación.</p>
+  <div class="fieldgrid">
+   <div class="full"><label for="foodSearch">Buscar alimento o producto</label><input id="foodSearch" placeholder="Ej. mangú, arroz cocido, yogur..." autocomplete="off"></div>
+   <div><label for="mealType">Comida</label><select id="mealType"><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select></div>
+   <div><label for="foodDate">Fecha</label><input id="foodDate" type="date"></div>
+  </div>
+  <div class="row" style="margin-top:10px;flex-wrap:wrap"><button id="searchLocal">Buscar en catálogo</button><button id="searchOnline" class="secondary">Buscar productos online</button></div>
+  <div id="foodSearchStatus" class="tiny" style="margin-top:8px"></div>
+  <div id="foodResults"></div>
+ </div>
+ <div id="selectedFoodCard" class="card hidden">
+  <h2 id="selectedFoodName">Añadir alimento</h2><div id="selectedFoodInfo" class="muted"></div>
+  <div class="fieldgrid" style="margin-top:12px">
+   <div><label for="foodAmount">Cantidad</label><input id="foodAmount" type="number" min="0.1" step="any" value="100"></div>
+   <div><label for="foodUnit">Unidad</label><select id="foodUnit"><option value="g">Gramos (g)</option><option value="ml">Mililitros (ml)</option><option value="serving">Porción indicada</option><option value="unit">Unidad</option><option value="cup">Taza (aprox.)</option></select></div>
+   <div class="full"><label for="foodNote">Nota opcional (preparación, marca, etc.)</label><input id="foodNote" placeholder="Ej. preparado con un poco de aceite"></div>
+  </div>
+  <div id="foodCalc" class="notice" style="margin-top:10px"></div>
+  <button id="addFood" style="margin-top:10px;width:100%">Guardar alimento en el día</button>
+ </div>
+ <div class="card"><div class="between"><h2>Comidas registradas</h2><span id="foodCount" class="pill">0 alimentos</span></div><div id="dailyFoodList" class="empty">No hay alimentos registrados para esta fecha.</div></div>
+ <div class="card"><h2>Crear alimento personalizado</h2><p class="muted">Úsalo si no encuentras un alimento. Introduce los valores de su etiqueta o una fuente fiable por cada 100 g o 100 ml.</p>
+  <div class="fieldgrid">
+   <div class="full"><label>Nombre</label><input id="customName" placeholder="Nombre del alimento"></div>
+   <div><label>Calorías / 100 g</label><input id="customKcal" type="number" min="0" placeholder="Opcional"></div>
+   <div><label>Proteína (g) / 100 g</label><input id="customProtein" type="number" min="0" placeholder="Opcional"></div>
+   <div><label>Carbohidratos (g) / 100 g</label><input id="customCarbs" type="number" min="0" placeholder="Opcional"></div>
+   <div><label>Grasas (g) / 100 g</label><input id="customFat" type="number" min="0" placeholder="Opcional"></div>
+  </div><button id="saveCustomFood" style="margin-top:10px">Guardar en mis alimentos</button><div id="customStatus" class="tiny" style="margin-top:6px"></div>
+ </div>
+</section>
+
+<section id="activity" class="section">
+ <div class="card"><h2>Registrar actividad física</h2><p class="muted">Registra lo que hiciste. Las calorías quemadas son estimaciones de aplicaciones o dispositivos, no una medida exacta.</p>
+  <div class="fieldgrid">
+   <div><label>Tipo de actividad</label><select id="activityType"><option>Ejercicio</option><option>Baile</option><option>Caminata</option><option>Otra actividad</option></select></div>
+   <div><label>Fecha</label><input id="activityDate" type="date"></div>
+   <div><label>Actividad específica</label><input id="activityName" placeholder="Ej. zumba, caminar"></div>
+   <div><label>Duración (minutos)</label><input id="activityMinutes" type="number" min="1" step="1" placeholder="Ej. 25"></div>
+   <div><label>Intensidad</label><select id="activityIntensity"><option>Suave</option><option>Moderada</option><option>Intensa</option><option>No sé</option></select></div>
+   <div><label>Pasos (opcional)</label><input id="activitySteps" type="number" min="0" placeholder="Ej. 3500"></div>
+   <div><label>Distancia km (opcional)</label><input id="activityDistance" type="number" min="0" step="0.1" placeholder="Ej. 2.4"></div>
+   <div><label>Calorías quemadas (opcional)</label><input id="activityCalories" type="number" min="0" placeholder="De tu app"></div>
+  </div><button id="saveActivity" style="margin-top:12px;width:100%">Guardar actividad</button>
+ </div>
+ <div class="card"><h2>Actividad registrada</h2><div id="activityList" class="empty">No hay actividades para esta fecha.</div></div>
+</section>
+
+<section id="suggest" class="section">
+ <div class="card"><h2>¿Qué puedo comer después?</h2><p class="muted">Las sugerencias son ideas generales de comidas equilibradas, no una prescripción médica ni un límite calórico.</p>
+  <div class="fieldgrid">
+   <div><label>¿Qué comida buscas?</label><select id="suggestMeal"><option>Próxima comida</option><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select></div>
+   <div><label>¿Qué tienes disponible?</label><input id="pantryInput" placeholder="Ej. huevos, yuca, pollo"></div>
+   <div class="full"><label>Preferencias o cosas que no quieres</label><input id="suggestPrefs" placeholder="Ej. sin pescado, quiero algo rápido"></div>
+  </div>
+  <button id="makeSuggestion" style="margin-top:12px;width:100%">Dame ideas de comida</button><div id="suggestionOutput" style="margin-top:12px"></div>
+ </div>
+ <div class="card"><h2>Cómo se hacen las sugerencias</h2><p class="muted">La primera versión combina reglas sencillas y una lista de ideas locales. Considera lo registrado y los alimentos que escribas. No usa inteligencia artificial externa ni inventa nutrientes exactos.</p></div>
+</section>
+
+<section id="history" class="section">
+ <div class="card"><h2>Mi historial</h2><div class="fieldgrid"><div><label>Consultar fecha</label><input id="historyDate" type="date"></div><div><label>Semana que comienza</label><input id="historyWeek" type="date"></div></div><div class="row" style="margin-top:10px"><button id="viewDate">Ver día</button><button id="viewWeek" class="secondary">Ver semana</button></div><div id="historyOutput" style="margin-top:14px"></div></div>
+ <div class="card"><h2>Registrar peso semanal</h2><p class="muted">Puedes pesarte una vez por semana si te resulta útil. El peso fluctúa de forma natural y no determina tu valor ni tu salud por sí solo.</p>
+  <div class="fieldgrid"><div><label>Fecha</label><input id="weightDate" type="date"></div><div><label>Peso (lb)</label><input id="weightValue" type="number" min="1" step="0.1" placeholder="Ej. 194.1"></div></div>
+  <button id="saveWeight" style="margin-top:10px;width:100%">Guardar peso</button><div id="weightList" style="margin-top:12px"></div>
+ </div>
+</section>
+
+<section id="profile" class="section">
+ <div class="card"><h2>Mi perfil</h2><p class="muted">Estos datos se guardan localmente. Puedes corregirlos cuando sea necesario.</p>
+  <div class="fieldgrid">
+   <div><label>Edad</label><input id="profileAge" type="number" min="1" max="120"></div>
+   <div><label>Sexo (opcional)</label><select id="profileSex"><option value="Mujer">Mujer</option><option value="Hombre">Hombre</option><option value="Otro/Prefiero no decir">Otro / prefiero no decir</option></select></div>
+   <div><label>Estatura (cm)</label><input id="profileHeight" type="number" min="50" max="250" step="0.1"></div>
+   <div><label>Peso inicial (lb)</label><input id="profileStartWeight" type="number" min="1" step="0.1"></div>
+   <div><label>Peso de referencia (lb, opcional)</label><input id="profileGoalWeight" type="number" min="1" step="0.1"></div>
+   <div><label>Preferencias alimentarias</label><input id="profilePrefs" placeholder="Ej. comida dominicana"></div>
+  </div><button id="saveProfile" style="margin-top:12px;width:100%">Guardar perfil</button><div id="profileStatus" class="tiny" style="margin-top:6px"></div>
+ </div>
+ <div class="card"><h2>Privacidad y datos</h2><p class="muted">Los registros permanecen en este navegador. No se envían a una cuenta. La búsqueda de productos online consulta Open Food Facts cuando usas esa función y requiere internet.</p>
+  <div class="stack"><button id="exportData">Exportar copia de seguridad (JSON)</button><label class="ghost" style="text-align:center;border:1px solid var(--line);padding:11px;border-radius:13px;cursor:pointer">Importar copia de seguridad<input id="importData" type="file" accept=".json,application/json" class="hidden"></label><button id="deleteData" class="danger">Borrar todos mis datos</button></div>
+  <p class="tiny" style="margin-top:12px">Guarda tu archivo de copia en un lugar seguro. Si borras los datos del navegador o pierdes el dispositivo, puedes perder el historial no exportado.</p>
+ </div>
+ <div class="card"><h2>Fuentes y precisión</h2><p class="muted">Los alimentos locales de muestra son estimaciones orientativas. Para productos envasados se puede consultar Open Food Facts; los datos dependen de lo informado por colaboradores y fabricantes. Revisa siempre la etiqueta del producto real.</p><p><a href="https://world.openfoodfacts.org/" target="_blank" rel="noopener">Open Food Facts</a> · <a href="https://fdc.nal.usda.gov/" target="_blank" rel="noopener">USDA FoodData Central</a></p></div>
+</section>
+</main>
+<nav class="nav">
+ <button class="active" data-goto="home"><span class="ico">⌂</span>Inicio</button>
+ <button data-goto="food"><span class="ico">🍽</span>Comidas</button>
+ <button data-goto="activity"><span class="ico">♡</span>Actividad</button>
+ <button data-goto="history"><span class="ico">▦</span>Historial</button>
+ <button data-goto="profile"><span class="ico">☻</span>Perfil</button>
+</nav>
+</div>
+<div id="toast" style="position:fixed;left:16px;right:16px;bottom:90px;max-width:500px;margin:auto;background:#403640;color:white;border-radius:12px;padding:12px 15px;z-index:10;display:none;box-shadow:var(--shadow)"></div>
+<script>
+const $=id=>document.getElementById(id);
+const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+const defaultProfile={age:16,sex:"Mujer",height:159,startWeight:194.1,goalWeight:143,prefs:"Comida dominicana"};
+const localFoods=[
+{name:"Arroz blanco cocido",category:"Cereales y acompañamientos",kcal:130,protein:2.7,carbs:28.2,fat:0.3,fiber:0.4,source:"Estimación genérica por 100 g cocidos"},
+{name:"Habichuelas rojas cocidas",category:"Legumbres",kcal:127,protein:8.7,carbs:22.8,fat:0.5,fiber:6.4,source:"Estimación genérica por 100 g cocidos"},
+{name:"Pollo guisado",category:"Platos dominicanos",kcal:190,protein:24,carbs:4,fat:8,source:"Estimación; depende de receta y pieza"},
+{name:"Mangú de plátano verde",category:"Platos dominicanos",kcal:120,protein:1.5,carbs:28,fat:0.3,fiber:2.5,source:"Estimación por 100 g; sin acompañamientos"},
+{name:"Plátano hervido",category:"Víveres",kcal:116,protein:1.3,carbs:31.2,fat:0.2,fiber:2.3,source:"Estimación por 100 g"},
+{name:"Tostones",category:"Platos dominicanos",kcal:270,protein:2,carbs:35,fat:13,source:"Estimación por 100 g; absorción de aceite variable"},
+{name:"Yuca hervida",category:"Víveres",kcal:125,protein:1.4,carbs:30,fat:0.3,fiber:1.8,source:"Estimación por 100 g"},
+{name:"Batata hervida",category:"Víveres",kcal:76,protein:1.4,carbs:17.7,fat:0.1,fiber:2.5,source:"Estimación por 100 g"},
+{name:"Casabe",category:"Panificados",kcal:350,protein:1.5,carbs:84,fat:0.5,fiber:4,source:"Estimación por 100 g; varía por marca"},
+{name:"Queso frito",category:"Platos dominicanos",kcal:320,protein:22,carbs:3,fat:24,source:"Estimación por 100 g; depende del queso y aceite"},
+{name:"Salami frito",category:"Platos dominicanos",kcal:390,protein:14,carbs:4,fat:35,source:"Estimación orientativa por 100 g"},
+{name:"Huevo cocido",category:"Proteínas",kcal:155,protein:12.6,carbs:1.1,fat:10.6,source:"Estimación por 100 g comestibles"},
+{name:"Huevo revuelto",category:"Proteínas",kcal:150,protein:10,carbs:2,fat:11,source:"Estimación por 100 g; depende de la grasa añadida"},
+{name:"Aguacate",category:"Frutas",kcal:160,protein:2,carbs:8.5,fat:14.7,fiber:6.7,source:"Estimación por 100 g"},
+{name:"Guineo / banana",category:"Frutas",kcal:89,protein:1.1,carbs:22.8,fat:0.3,fiber:2.6,source:"Estimación por 100 g comestibles"},
+{name:"Mango",category:"Frutas",kcal:60,protein:0.8,carbs:15,fat:0.4,fiber:1.6,source:"Estimación por 100 g"},
+{name:"Lechosa / papaya",category:"Frutas",kcal:43,protein:0.5,carbs:10.8,fat:0.3,fiber:1.7,source:"Estimación por 100 g"},
+{name:"Naranja",category:"Frutas",kcal:47,protein:0.9,carbs:11.8,fat:0.1,fiber:2.4,source:"Estimación por 100 g"},
+{name:"Avena cocida con agua",category:"Desayunos",kcal:71,protein:2.5,carbs:12,fat:1.5,fiber:1.7,source:"Estimación por 100 g cocidos"},
+{name:"Leche entera",category:"Lácteos",kcal:61,protein:3.2,carbs:4.8,fat:3.3,source:"Estimación por 100 ml"},
+{name:"Yogur natural sin azúcar",category:"Lácteos",kcal:61,protein:3.5,carbs:4.7,fat:3.3,source:"Estimación por 100 g"},
+{name:"Pan blanco",category:"Panificados",kcal:266,protein:8.9,carbs:49,fat:3.2,fiber:2.7,source:"Estimación por 100 g"},
+{name:"Atún en agua escurrido",category:"Proteínas",kcal:116,protein:25.5,carbs:0,fat:0.8,source:"Estimación por 100 g escurridos"},
+{name:"Pescado a la plancha",category:"Proteínas",kcal:140,protein:25,carbs:0,fat:4,source:"Estimación orientativa por 100 g"},
+{name:"Pollo cocido sin piel",category:"Proteínas",kcal:165,protein:31,carbs:0,fat:3.6,source:"Estimación por 100 g cocidos"},
+{name:"Lentejas cocidas",category:"Legumbres",kcal:116,protein:9,carbs:20,fat:0.4,fiber:7.9,source:"Estimación por 100 g"},
+{name:"Habichuelas negras cocidas",category:"Legumbres",kcal:132,protein:8.9,carbs:23.7,fat:0.5,fiber:8.7,source:"Estimación por 100 g"},
+{name:"Moro de guandules",category:"Platos dominicanos",kcal:160,protein:5,carbs:28,fat:3,source:"Estimación por 100 g; depende de la receta"},
+{name:"Sancocho dominicano",category:"Platos dominicanos",kcal:110,protein:7,carbs:13,fat:3.5,source:"Estimación por 100 g; receta muy variable"},
+{name:"Ensalada de vegetales",category:"Vegetales",kcal:35,protein:1.5,carbs:7,fat:0.3,fiber:2.5,source:"Estimación por 100 g sin aderezo"},
+{name:"Tomate",category:"Vegetales",kcal:18,protein:0.9,carbs:3.9,fat:0.2,fiber:1.2,source:"Estimación por 100 g"},
+{name:"Zanahoria cocida",category:"Vegetales",kcal:35,protein:0.8,carbs:8.2,fat:0.2,fiber:3,source:"Estimación por 100 g"},
+{name:"Maíz cocido",category:"Cereales y acompañamientos",kcal:96,protein:3.4,carbs:21,fat:1.5,fiber:2.4,source:"Estimación por 100 g"},
+{name:"Arenque guisado",category:"Platos dominicanos",kcal:210,protein:20,carbs:5,fat:12,source:"Estimación por 100 g; depende de preparación"},
+{name:"Yuca frita",category:"Víveres",kcal:250,protein:1.5,carbs:39,fat:10,source:"Estimación por 100 g; absorción de aceite variable"},
+{name:"Batido de guineo con leche",category:"Bebidas y meriendas",kcal:95,protein:3.5,carbs:16,fat:2.5,source:"Estimación por 100 ml; depende de receta y azúcar"}
+];
+let db={profile:defaultProfile,foods:[],activities:[],weights:[],customFoods:[]};
+let selectedFood=null,onlineFoods=[],deferredInstall=null;
+function load(){try{const s=JSON.parse(localStorage.getItem("miBienestarV1")||"{}");db={...db,...s};db.profile={...defaultProfile,...(db.profile||{})};}catch(e){console.warn(e)}}
+function save(){try{localStorage.setItem("miBienestarV1",JSON.stringify(db));}catch(e){toast("No se pudieron guardar los datos. Exporta una copia y libera espacio si es necesario.");}}
+function toast(msg){const t=$("toast");t.textContent=msg;t.style.display="block";clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.style.display="none",2800)}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function fmt(n,d=1){return Number.isFinite(Number(n))?Number(n).toLocaleString("es-ES",{maximumFractionDigits:d}):"—"}
+function dayFoods(date){return db.foods.filter(x=>x.date===date)}
+function dayActivities(date){return db.activities.filter(x=>x.date===date)}
+function totals(foods){const out={kcal:0,protein:0,carbs:0,fat:0,fiber:0,sugar:0,sodium:0};let any=false;for(const f of foods){for(const k of Object.keys(out)){if(f.n[k]!=null&&Number.isFinite(+f.n[k])){out[k]+=+f.n[k];if(+f.n[k]!==0)any=true}}}out.any=any;return out}
+function nutritionHtml(n){return `<div class="tiny">${n.kcal!=null?fmt(n.kcal)+" kcal": "kcal sin dato"} · ${n.protein!=null?fmt(n.protein)+" g proteína":"proteína sin dato"} · ${n.carbs!=null?fmt(n.carbs)+" g carb." : "carbohidratos sin dato"} · ${n.fat!=null?fmt(n.fat)+" g grasa":"grasas sin dato"}</div>`}
+function showSection(id){document.querySelectorAll(".section").forEach(s=>s.classList.toggle("active",s.id===id));document.querySelectorAll(".nav [data-goto]").forEach(b=>b.classList.toggle("active",b.dataset.goto===id));window.scrollTo({top:0,behavior:"smooth"});if(id==="food")renderFoods();if(id==="activity")renderActivities();if(id==="history")renderWeights();if(id==="home")renderHome()}
+document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>showSection(b.dataset.goto)));
+function renderHome(){const d=today(),fs=dayFoods(d),as=dayActivities(d),t=totals(fs);$("todayLabel").textContent=new Date().toLocaleDateString("es-DO",{weekday:"long",day:"numeric",month:"long"});$("homeMeals").textContent=new Set(fs.map(x=>x.meal)).size;$("homeProtein").textContent=fs.some(x=>x.n.protein!=null)?fmt(t.protein)+" g":"—";$("homeActivity").textContent=fmt(as.reduce((a,x)=>a+(+x.minutes||0),0),0)+" min";$("homeFoods").textContent=fs.length;const rec=[...fs.map(x=>({date:x.date,title:x.name,sub:x.meal+" · "+fmt(x.amount)+" "+x.unit})),...as.map(x=>({date:x.date,title:x.type+": "+x.name,sub:fmt(x.minutes,0)+" min"}))].slice(-5).reverse();$("recentEntries").innerHTML=rec.length?rec.map(x=>`<div class="foodrow"><div class="grow"><strong>${esc(x.title)}</strong><small>${esc(x.sub)}</small></div></div>`).join(""):'Todavía no has registrado nada hoy.'}
+function renderFoods(){const d=$("foodDate").value||today(),fs=dayFoods(d),t=totals(fs);$("foodCount").textContent=fs.length+" alimento"+(fs.length===1?"":"s");$("dailyFoodList").innerHTML=fs.length?`<div class="stat" style="margin-bottom:10px"><div class="between"><span>Totales registrados</span><b>${fmt(t.kcal)} kcal</b></div><div class="tiny">${fmt(t.protein)} g proteína · ${fmt(t.carbs)} g carbohidratos · ${fmt(t.fat)} g grasas</div><div class="tiny">Solo suma nutrientes disponibles en los registros.</div></div>`+fs.map(f=>`<div class="foodrow"><div class="grow"><strong>${esc(f.name)}</strong><small>${esc(f.meal)} · ${fmt(f.amount)} ${esc(f.unit)}${f.note?" · "+esc(f.note):""}</small>${nutritionHtml(f.n)}${f.source?`<small>Fuente: ${esc(f.source)}</small>`:""}</div><button class="ghost" onclick="deleteFood('${f.id}')">Borrar</button></div>`).join(""):'No hay alimentos registrados para esta fecha.';renderHome()}
+function deleteFood(id){db.foods=db.foods.filter(x=>x.id!==id);save();renderFoods();toast("Registro eliminado")}
+function searchLocal(){const q=$("foodSearch").value.trim().toLowerCase();const all=[...localFoods,...db.customFoods];const results=q?all.filter(f=>(f.name+" "+(f.category||"")).toLowerCase().includes(q)):all;renderFoodResults(results.slice(0,30).map(f=>({...f,origin:"local"})));$("foodSearchStatus").textContent=results.length?`${results.length} resultado(s) del catálogo local.`:"No se encontró. Prueba otra palabra o busca productos online."}
+let visibleFoodResults=[];
+function renderFoodResults(results){const c=$("foodResults");visibleFoodResults=results;if(!results.length){c.innerHTML='<div class="empty">No hay resultados. Prueba otro término o crea un alimento personalizado.</div>';return}c.innerHTML=results.map((f,i)=>`<div class="result"><div class="between" style="align-items:flex-start"><div style="flex:1"><strong>${esc(f.name)}</strong><div class="tiny">${esc(f.category||"Alimento")} · ${esc(f.source||"Fuente nutricional no especificada")}</div>${nutritionHtml({kcal:f.kcal,protein:f.protein,carbs:f.carbs,fat:f.fat})}</div><button type="button" data-food-index="${i}">Elegir</button></div></div>`).join("");c.querySelectorAll("[data-food-index]").forEach(btn=>btn.addEventListener("click",()=>chooseFood(visibleFoodResults[+btn.dataset.foodIndex])))}
+window.chooseFood=function(f){if(!f||typeof f!=="object")return;selectedFood=f;$("selectedFoodCard").classList.remove("hidden");$("selectedFoodName").textContent=f.name;$("selectedFoodInfo").textContent=(f.source||"Datos nutricionales por 100 g o 100 ml, según el alimento.")+" Los valores pueden ser aproximados.";$("foodAmount").value=100;$("foodUnit").value="g";$("foodNote").value="";calcSelected();$("selectedFoodCard").scrollIntoView({behavior:"smooth",block:"start"})};
+function multiplier(){const amt=+ $("foodAmount").value||0,unit=$("foodUnit").value;let base=100;if(unit==="unit")base=100;else if(unit==="cup")base=240;else if(unit==="serving")base=100;return amt/base}
+function calcSelected(){if(!selectedFood)return;const m=multiplier(),f=selectedFood;const vals=["kcal","protein","carbs","fat","fiber","sugar","sodium"];const bits=vals.filter(k=>f[k]!=null).map(k=>`${fmt(f[k]*m)} ${k==="kcal"?"kcal":k==="sodium"?"mg sodio":"g "+({protein:"proteína",carbs:"carbohidratos",fat:"grasas",fiber:"fibra",sugar:"azúcares"}[k])}`);$("foodCalc").textContent="Estimación para esta cantidad: "+(bits.join(" · ")||"No hay información nutricional suficiente.");}
+$("foodAmount").addEventListener("input",calcSelected);$("foodUnit").addEventListener("change",calcSelected);
+$("searchLocal").addEventListener("click",searchLocal);$("foodSearch").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();searchLocal()}});
+$("searchOnline").addEventListener("click",async()=>{const q=$("foodSearch").value.trim();if(!q){toast("Escribe el nombre de un producto.");return}const status=$("foodSearchStatus");status.textContent="Buscando en Open Food Facts…";$("foodResults").innerHTML="";try{const url="https://world.openfoodfacts.org/cgi/search.pl?search_terms="+encodeURIComponent(q)+"&search_simple=1&action=process&json=1&page_size=20";const r=await fetch(url,{headers:{"Accept":"application/json"}});if(!r.ok)throw new Error("Respuesta no disponible");const data=await r.json();onlineFoods=(data.products||[]).map(p=>{const n=p.nutriments||{};return{name:p.product_name||p.product_name_es||"Producto sin nombre",category:(p.categories_tags||[]).slice(0,2).join(", "),kcal:n["energy-kcal_100g"]??(n["energy_100g"]!=null?n["energy_100g"]/4.184:null),protein:n.proteins_100g??null,carbs:n.carbohydrates_100g??null,fat:n.fat_100g??null,fiber:n.fiber_100g??null,sugar:n.sugars_100g??null,sodium:n.sodium_100g!=null?n.sodium_100g*1000:null,source:"Open Food Facts · "+(p.brands||"marca no indicada"),barcode:p.code,origin:"online"}}).filter(f=>f.name&&f.name!=="Producto sin nombre");renderFoodResults(onlineFoods);status.textContent=`Resultados online: ${onlineFoods.length}. Revisa la etiqueta del envase para confirmar los datos.`;if(!onlineFoods.length)status.textContent="No se encontraron productos con datos suficientes."}catch(e){status.textContent="No se pudo consultar el catálogo online. Comprueba tu conexión e inténtalo otra vez.";toast("La búsqueda online necesita internet.")}});
+$("addFood").addEventListener("click",()=>{if(!selectedFood)return;const amount=+$("foodAmount").value;if(!(amount>0)){toast("Introduce una cantidad válida.");return}const unit=$("foodUnit").value;let factor=amount/100;if(unit==="cup")factor=amount*240/100;if(unit==="unit"||unit==="serving")factor=amount;const n={};for(const k of ["kcal","protein","carbs","fat","fiber","sugar","sodium"])n[k]=selectedFood[k]==null?null:+selectedFood[k]*factor;const f={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()),date:$("foodDate").value||today(),meal:$("mealType").value,name:selectedFood.name,amount,unit,n,note:$("foodNote").value,source:selectedFood.source||"Fuente no especificada"};db.foods.push(f);save();selectedFood=null;$("selectedFoodCard").classList.add("hidden");$("foodSearch").value="";$("foodResults").innerHTML="";$("foodSearchStatus").textContent="";renderFoods();toast("Alimento guardado")});
+$("saveCustomFood").addEventListener("click",()=>{const name=$("customName").value.trim();if(!name){toast("Escribe el nombre del alimento.");return}const f={name,category:"Mis alimentos",kcal:numOrNull("customKcal"),protein:numOrNull("customProtein"),carbs:numOrNull("customCarbs"),fat:numOrNull("customFat"),source:"Dato introducido manualmente por la usuaria"};db.customFoods.push(f);save();$("customStatus").textContent="Alimento guardado en tu catálogo personal.";["customName","customKcal","customProtein","customCarbs","customFat"].forEach(id=>$(id).value="");toast("Alimento personalizado guardado")});
+function numOrNull(id){const s=$(id).value;return s===""?null:Math.max(0,+s)}
+function renderActivities(){const d=$("activityDate").value||today(),as=dayActivities(d);$("activityList").innerHTML=as.length?as.map(a=>`<div class="foodrow"><div class="grow"><strong>${esc(a.type)}: ${esc(a.name||"Actividad")}</strong><small>${fmt(a.minutes,0)} min · ${esc(a.intensity)}${a.steps!=null?" · "+fmt(a.steps,0)+" pasos":""}${a.distance!=null?" · "+fmt(a.distance)+" km":""}${a.calories!=null?" · "+fmt(a.calories,0)+" kcal registradas":""}</small></div><button class="ghost" onclick="deleteActivity('${a.id}')">Borrar</button></div>`).join(""):'No hay actividades para esta fecha.';renderHome()}
+window.deleteActivity=id=>{db.activities=db.activities.filter(x=>x.id!==id);save();renderActivities();toast("Actividad eliminada")};
+$("saveActivity").addEventListener("click",()=>{const minutes=+$("activityMinutes").value;if(!(minutes>0)){toast("Introduce la duración en minutos.");return}const a={id:String(Date.now()+Math.random()),date:$("activityDate").value||today(),type:$("activityType").value,name:$("activityName").value.trim(),minutes,intensity:$("activityIntensity").value,steps:$("activitySteps").value===""?null:+$("activitySteps").value,distance:$("activityDistance").value===""?null:+$("activityDistance").value,calories:$("activityCalories").value===""?null:+$("activityCalories").value};db.activities.push(a);save();["activityName","activityMinutes","activitySteps","activityDistance","activityCalories"].forEach(id=>$(id).value="");renderActivities();toast("Actividad guardada")});
+const suggestionIdeas=[
+{title:"Mangú con huevo y aguacate",tags:["mangú","huevo","aguacate"],text:"Combina mangú con huevo preparado a tu gusto y aguacate; ajusta la cantidad a tu hambre y acompaña con agua o la bebida que prefieras."},
+{title:"Arroz, habichuelas y pollo guisado",tags:["arroz","habichuelas","pollo"],text:"Una comida dominicana con cereal, legumbres y una fuente de proteína. Puedes añadir ensalada o vegetales si tienes."},
+{title:"Yuca con huevos y tomate",tags:["yuca","huevo","tomate"],text:"Yuca hervida con huevos y tomate, una opción sencilla con carbohidratos, proteína y vegetales."},
+{title:"Pescado con víveres y ensalada",tags:["pescado","yuca","plátano","ensalada"],text:"Pescado con yuca, plátano hervido o batata y ensalada; elige según lo disponible."},
+{title:"Avena con leche y fruta",tags:["avena","leche","guineo","mango"],text:"Avena preparada con leche y una fruta, útil como desayuno o merienda."},
+{title:"Habichuelas con arroz y aguacate",tags:["habichuelas","arroz","aguacate"],text:"Arroz y habichuelas con aguacate o vegetales. Puedes añadir huevo, pollo o pescado si están disponibles."},
+{title:"Yogur con fruta y avena",tags:["yogur","fruta","avena"],text:"Una merienda con yogur, fruta y avena o cereal, según lo que tengas."},
+{title:"Sándwich de huevo y tomate",tags:["pan","huevo","tomate"],text:"Pan con huevo y tomate; acompáñalo con fruta si te apetece y la tienes disponible."},
+{title:"Sancocho con acompañamiento",tags:["sancocho","yuca","plátano"],text:"Si tienes sancocho preparado, puede formar parte de una comida completa. La composición depende de los ingredientes de la receta."}
+];
+$("makeSuggestion").addEventListener("click",()=>{const pantry=$("pantryInput").value.trim().toLowerCase(),prefs=$("suggestPrefs").value.trim().toLowerCase(),meal=$("suggestMeal").value,date=today(),todayLogged=dayFoods(date).map(f=>f.name.toLowerCase()).join(" ");let ideas=[...suggestionIdeas];if(pantry){const terms=pantry.split(/[,;]+/).map(s=>s.trim()).filter(Boolean);const matched=ideas.filter(i=>i.tags.some(tag=>terms.some(t=>tag.includes(t)||t.includes(tag)))||terms.some(t=>i.title.toLowerCase().includes(t)));if(matched.length)ideas=matched}if(/sin pescado|no pescado/.test(prefs))ideas=ideas.filter(i=>!i.tags.includes("pescado"));if(/sin huevo|no huevo/.test(prefs))ideas=ideas.filter(i=>!i.tags.includes("huevo"));if(!ideas.length)ideas=[...suggestionIdeas].slice(0,3);ideas=ideas.filter(i=>!i.tags.some(t=>todayLogged.includes(t))).concat(ideas.filter(i=>i.tags.some(t=>todayLogged.includes(t))));ideas=ideas.slice(0,3);$("suggestionOutput").innerHTML=`<div class="notice success">Ideas orientativas para ${esc(meal.toLowerCase())}. Elige según tu hambre, preferencias y disponibilidad; no necesitas compensar comidas ni ejercicio.</div>`+ideas.map(i=>`<div class="result"><strong>${esc(i.title)}</strong><p style="margin:6px 0 0">${esc(i.text)}</p></div>`).join("")+`<p class="tiny" style="margin-top:8px">Las sugerencias se generan con reglas locales; no son un diagnóstico ni una dieta personalizada por un profesional sanitario.</p>`});
+function renderHistoryDay(date){const fs=dayFoods(date),as=dayActivities(date),t=totals(fs);$("historyOutput").innerHTML=`<h3>${new Date(date+"T12:00:00").toLocaleDateString("es-DO",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}</h3><div class="grid"><div class="stat"><span class="muted">Alimentos</span><b>${fs.length}</b></div><div class="stat"><span class="muted">Calorías registradas</span><b>${fs.length?fmt(t.kcal):"—"}</b></div><div class="stat"><span class="muted">Proteína registrada</span><b>${fs.length?fmt(t.protein)+" g":"—"}</b></div><div class="stat"><span class="muted">Actividad</span><b>${fmt(as.reduce((s,a)=>s+a.minutes,0),0)} min</b></div></div>`+(fs.length?'<h3 style="margin-top:15px">Alimentación</h3>'+fs.map(f=>`<div class="foodrow"><div class="grow"><strong>${esc(f.name)}</strong><small>${esc(f.meal)} · ${fmt(f.amount)} ${esc(f.unit)}</small></div></div>`).join(""):"<p class='muted' style='margin-top:12px'>No hay comidas registradas para esta fecha.</p>")+(as.length?'<h3 style="margin-top:15px">Actividad</h3>'+as.map(a=>`<div class="foodrow"><div class="grow"><strong>${esc(a.type)}: ${esc(a.name)}</strong><small>${a.minutes} min · ${esc(a.intensity)}</small></div></div>`).join(""):"")}
+$("viewDate").addEventListener("click",()=>renderHistoryDay($("historyDate").value||today()));
+$("viewWeek").addEventListener("click",()=>{const start=$("historyWeek").value||today(),dt=new Date(start+"T12:00:00");const days=[];for(let i=0;i<7;i++){const x=new Date(dt);x.setDate(x.getDate()+i);days.push(x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0"))}const fs=db.foods.filter(f=>days.includes(f.date)),as=db.activities.filter(a=>days.includes(a.date)),ws=db.weights.filter(w=>days.includes(w.date)).sort((a,b)=>a.date.localeCompare(b.date));const t=totals(fs);$("historyOutput").innerHTML=`<h3>Semana del ${esc(start)} al ${esc(days[6])}</h3><div class="grid"><div class="stat"><span class="muted">Alimentos registrados</span><b>${fs.length}</b></div><div class="stat"><span class="muted">Días con registro</span><b>${new Set(fs.map(f=>f.date)).size}</b></div><div class="stat"><span class="muted">Actividad total</span><b>${fmt(as.reduce((s,a)=>s+a.minutes,0),0)} min</b></div><div class="stat"><span class="muted">Peso registrado</span><b>${ws.length?ws.map(w=>fmt(w.value)+" lb").join(" → "):"—"}</b></div></div><p class="muted" style="margin-top:12px">Nutrientes sumados solo a partir de los registros disponibles: ${fmt(t.kcal)} kcal · ${fmt(t.protein)} g proteína. No son una recomendación de consumo.</p>`+days.map(d=>`<div class="foodrow"><div class="grow"><strong>${new Date(d+"T12:00:00").toLocaleDateString("es-DO",{weekday:"short",day:"numeric",month:"short"})}</strong><small>${db.foods.filter(f=>f.date===d).length} alimentos · ${db.activities.filter(a=>a.date===d).reduce((s,a)=>s+a.minutes,0)} min de actividad</small></div><button class="ghost" onclick="document.getElementById('historyDate').value='${d}';document.getElementById('viewDate').click()">Ver</button></div>`).join("")});
+$("saveWeight").addEventListener("click",()=>{const value=+$("weightValue").value,date=$("weightDate").value||today();if(!(value>0)){toast("Introduce un peso válido.");return}const old=db.weights.findIndex(w=>w.date===date);const w={date,value};if(old>=0)db.weights[old]=w;else db.weights.push(w);db.weights.sort((a,b)=>a.date.localeCompare(b.date));save();$("weightValue").value="";renderWeights();toast("Peso semanal guardado")});
+function renderWeights(){$("weightList").innerHTML=db.weights.length?db.weights.slice().reverse().map(w=>`<div class="foodrow"><div class="grow"><strong>${fmt(w.value)} lb</strong><small>${esc(w.date)}</small></div><button class="ghost" onclick="deleteWeight('${w.date}')">Borrar</button></div>`).join(""):'<p class="muted">Aún no hay pesos registrados.</p>'}
+window.deleteWeight=date=>{db.weights=db.weights.filter(w=>w.date!==date);save();renderWeights();toast("Peso eliminado")};
+function populateProfile(){const p=db.profile;$("profileAge").value=p.age??"";$("profileSex").value=p.sex||"Mujer";$("profileHeight").value=p.height??"";$("profileStartWeight").value=p.startWeight??"";$("profileGoalWeight").value=p.goalWeight??"";$("profilePrefs").value=p.prefs||""}
+$("saveProfile").addEventListener("click",()=>{db.profile={age:+$("profileAge").value||null,sex:$("profileSex").value,height:+$("profileHeight").value||null,startWeight:+$("profileStartWeight").value||null,goalWeight:+$("profileGoalWeight").value||null,prefs:$("profilePrefs").value.trim()};save();$("profileStatus").textContent="Perfil guardado en este dispositivo.";toast("Perfil guardado")});
+$("exportData").addEventListener("click",()=>{const blob=new Blob([JSON.stringify({app:"Mi bienestar",version:1,exportedAt:new Date().toISOString(),data:db},null,2)],{type:"application/json"});const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="mi-bienestar-copia-"+today()+".json";a.click();URL.revokeObjectURL(url);toast("Copia de seguridad preparada")});
+$("importData").addEventListener("change",async e=>{const file=e.target.files[0];if(!file)return;try{const parsed=JSON.parse(await file.text()),incoming=parsed.data||parsed;if(!incoming||!Array.isArray(incoming.foods)||!Array.isArray(incoming.activities))throw new Error("Formato no válido");if(!confirm("Importar reemplazará los registros actuales de este dispositivo. ¿Continuar?"))return;db={...db,...incoming,profile:{...defaultProfile,...incoming.profile}};save();populateProfile();renderHome();renderFoods();renderActivities();renderWeights();toast("Copia importada")}catch(err){toast("No se pudo importar. Comprueba que sea una copia válida.")}e.target.value=""});
+$("deleteData").addEventListener("click",()=>{if(!confirm("Esto borrará el perfil y todos los registros guardados en este navegador. ¿Has exportado una copia si la necesitas?"))return;localStorage.removeItem("miBienestarV1");db={profile:defaultProfile,foods:[],activities:[],weights:[],customFoods:[]};populateProfile();renderHome();renderFoods();renderActivities();renderWeights();toast("Datos locales borrados")});
+function init(){load();const d=today();["foodDate","activityDate","historyDate","historyWeek","weightDate"].forEach(id=>$(id).value=d);populateProfile();renderHome();renderFoods();renderActivities();renderWeights();if(navigator.onLine===false)$("offlineNotice").classList.remove("hidden")}
+window.addEventListener("online",()=>$("offlineNotice").classList.add("hidden"));window.addEventListener("offline",()=>$("offlineNotice").classList.remove("hidden"));
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;$("installBtn").classList.remove("hidden")});$("installBtn").addEventListener("click",async()=>{if(!deferredInstall){toast("Si no aparece la opción, usa el menú del navegador y elige «Instalar aplicación» o «Añadir a pantalla de inicio».");return}deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;$("installBtn").classList.add("hidden")});
+
+init();
+</script>
+</body>
+</html>
